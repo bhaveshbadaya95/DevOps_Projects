@@ -1,0 +1,93 @@
+One of the easiest AWS cloud projects using Python is creating a simple serverless web application using AWS Lambda and API Gateway. Here are the basic steps you can follow:
+
+Prerequisites:
+AWS Account: You need an AWS account to access AWS services.
+AWS CLI: Install and configure the AWS Command Line Interface (CLI) on your machine.
+Python: Ensure Python is installed on your machine.
+Steps:
+Create a Virtual Environment:
+Open a terminal and create a virtual environment for your project.
+
+bash
+Copy code
+python -m venv myenv
+source
+ myenv/bin/activate  
+# On Windows, use `myenv\Scripts\activate`
+
+Install Required Libraries:
+Install the necessary libraries, including the AWS SDK for Python (Boto3).
+
+bash
+Copy code
+pip install boto3
+Write Your Python Lambda Function:
+Create a simple Python script (e.g., lambda_function.py) with a Lambda function that returns a basic response.
+
+python
+Copy code
+def
+ 
+lambda_handler
+(
+event, context
+):
+    
+return
+ {
+        
+'statusCode'
+: 
+200
+,
+        
+'body'
+: 
+'Hello, AWS Lambda!'
+
+    }
+Zip Your Code:
+Create a ZIP file containing your Python script.
+
+bash
+Copy code
+zip deployment_package.zip lambda_function.py
+Create an IAM Role:
+Create an IAM role with the necessary permissions for your Lambda function. At a minimum, it should have the AWSLambdaBasicExecutionRole policy attached.
+
+Create an AWS Lambda Function:
+Use the AWS CLI to create a Lambda function and upload your deployment package.
+
+bash
+Copy code
+aws lambda create-function \
+    --function-name MyLambdaFunction \
+    --runtime python3.8 \
+    --role arn:aws:iam::your-account-id:role/your-role-name \
+    --handler lambda_function.lambda_handler \
+    --zip-file fileb://deployment_package.zip
+Create an API Gateway:
+Create an API Gateway to expose your Lambda function via HTTP.
+
+bash
+Copy code
+aws apigateway create-rest-api --name MyApi
+Retrieve the API ID from the response and replace <API_ID> in the following command:
+
+bash
+Copy code
+aws apigateway create-resource --rest-api-id <API_ID> --parent-id <ROOT_RESOURCE_ID> --path-part myresource
+Create a Deployment:
+Deploy your API to create a new deployment.
+
+bash
+Copy code
+aws apigateway create-deployment --rest-api-id <API_ID> --stage-name prod
+Get the API Endpoint URL:
+Get the URL of your API Gateway deployment.
+
+bash
+Copy code
+aws apigateway get-apis
+Test Your Application:
+Use a tool like curl or a web browser to test your serverless web application by making a GET request to the API Gateway URL.
