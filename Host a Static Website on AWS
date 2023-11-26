@@ -1,0 +1,52 @@
+### Project: Host a Static Website on AWS
+
+#### Prerequisites:
+1. **AWS Account:** Make sure you have an AWS account. If you don't have one, you can sign up for a free tier account [here](https://aws.amazon.com/free/).
+
+2. **Domain Name (Optional):** If you want to use a custom domain, purchase one through a domain registrar like AWS Route 53.
+
+#### Steps:
+
+1. **Create an S3 Bucket:**
+   - Go to the [Amazon S3 Console](https://s3.console.aws.amazon.com/).
+   - Click "Create bucket."
+   - Enter a unique bucket name and choose the AWS region.
+   - Leave the other settings as default and click "Create bucket."
+
+2. **Upload Website Files to S3:**
+   - Inside your bucket, click "Upload."
+   - Add your HTML, CSS, and other static files.
+   - Make sure to set the file permissions to public if they are not private.
+
+3. **Enable Static Website Hosting:**
+   - In the bucket properties, go to the "Static website hosting" section.
+   - Choose "Use this bucket to host a website."
+   - Enter the index and error document names (e.g., `index.html`).
+
+4. **Configure Bucket Policy:**
+   - In the bucket permissions, click on "Bucket Policy."
+   - Add a policy to allow public access to your files. Replace `your-bucket-name` with your actual bucket name.
+
+   ```json
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Effect": "Allow",
+         "Principal": "*",
+         "Action": "s3:GetObject",
+         "Resource": "arn:aws:s3:::your-bucket-name/*"
+       }
+     ]
+   }
+   ```
+
+5. **Set Up AWS Route 53 (Optional):**
+   - Go to the [Route 53 Console](https://console.aws.amazon.com/route53/).
+   - Create a new hosted zone for your domain.
+   - Add a record set of type "Alias" and select your S3 bucket as the target.
+
+6. **Access Your Website:**
+   - Once everything is set up, your website should be accessible via the S3 endpoint (e.g., `http://your-bucket-name.s3-website-your-region.amazonaws.com`) or your custom domain if you set up Route 53.
+
+This project provides a hands-on introduction to AWS services and is a great starting point for beginners. As you become more comfortable, you can explore more complex projects involving services like AWS Lambda, AWS DynamoDB, or AWS Elastic Beanstalk based on your interests and goals.
