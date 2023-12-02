@@ -1,17 +1,11 @@
-def add_numbers(a, b):
-    return a + b
+from flask import Flask
 
-def main():
-    print("Basic Python Calculator")
-    try:
-        num1 = float(input("Enter the first number: "))
-        num2 = float(input("Enter the second number: "))
-    except ValueError:
-        print("Invalid input. Please enter numeric values.")
-        return
+app = Flask(__name__)
 
-    result = add_numbers(num1, num2)
-    print(f"The sum of {num1} and {num2} is: {result}")
+@app.route('/')
+def hello_world():
+    return 'Hello, World!'
 
-if __name__ == "__main__":
-    main()
+if __name__ == '__main__':
+    # Run the app on 0.0.0.0 (all available network interfaces) and port 80
+    app.run(host='0.0.0.0', port=80)
